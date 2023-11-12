@@ -104,6 +104,7 @@
               >
               </span>
             </li>
+            <span class="dark:text-gray-300" th:text="${posts.page} +' / '+ ${posts.totalPages}"></span>
             <li th:if="${posts.hasNext()}" class="pagination-next">
               <span
                 class="pagination-circle iconfont icon-right dark:text-gray-300"
