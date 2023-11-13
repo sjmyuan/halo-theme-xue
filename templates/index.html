@@ -104,7 +104,53 @@
               >
               </span>
             </li>
-            <span class="dark:text-gray-300" th:text="${posts.page} +' / '+ ${posts.totalPages}"></span>
+            <th:block th:if="${posts.page > 3}">
+              <li>
+                <span
+                  class="pagination-circle dark:text-gray-300"
+                  th:attr="data-path='/page/1'"
+                  th:text="1"
+                >
+                </span>
+              </li>
+              <li th:if="${posts.page != 4}">
+                <span class="dark:text-gray-300">…</span>
+              </li>
+            </th:block>
+
+            <th:block
+              th:each="index:${#numbers.sequence(posts.page-2,posts.page+2)}"
+            >
+              <li th:if="${posts.page} == ${index}">
+                <span
+                  class="pagination-circle is-current"
+                  th:text="${posts.page}"
+                ></span>
+              </li>
+              <li
+                th:unless="${posts.page == index}"
+                th:if="${index > 0 && index <= posts.totalPages}"
+              >
+                <span
+                  class="pagination-circle dark:text-gray-300"
+                  th:attr="data-path=${'/page/'+index}"
+                  th:text="${index}"
+                ></span>
+              </li>
+            </th:block>
+
+            <th:block th:if="${posts.totalPages - posts.page > 2}">
+              <li th:if="${posts.totalPages - posts.page != 3}">
+                <span class="dark:text-gray-300">…</span>
+              </li>
+              <li>
+                <span
+                  class="pagination-circle"
+                  th:attr="data-path=${'/page/'+posts.totalPages}"
+                  th:text="${posts.totalPages}"
+                ></span>
+              </li>
+            </th:block>
             <li th:if="${posts.hasNext()}" class="pagination-next">
               <span
                 class="pagination-circle iconfont icon-right dark:text-gray-300"
